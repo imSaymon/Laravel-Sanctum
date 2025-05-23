@@ -3,6 +3,10 @@ import HelloWorld from './components/HelloWorld.vue'
 import axios from 'axios'
 import { ref } from 'vue';
 
+axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;
+
 const response = ref({})
 async function ajax() {
   response.value = await axios.get('http://laravel-sanctum.test/api/token', {
@@ -12,11 +16,20 @@ async function ajax() {
   });
 }
 
+
+async function csrfCookie() {
+  await axios.get('/sanctum/csrf-cookie');
+}
+
 </script>
 
 <template>
   <div>
-
+    <button @click="csrfCookie">
+      CSRF Cookie
+    </button>
+    
+    <br><br><br>
     <pre>{{ response.data }}</pre>
 
     <button @click="ajax">
