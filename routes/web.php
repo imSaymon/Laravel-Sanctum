@@ -6,6 +6,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return 'login';
-})->name('login');
+Route::post('/login', function () {
+    $login = [
+        'email' => 'loyce40@example.org',
+        'password' => 'password',
+    ];
+    if(!auth()->attempt($login))
+    {
+        throw new Exception();
+    }
+
+    request()->session()->regenerate();
+    return auth()->user();
+});

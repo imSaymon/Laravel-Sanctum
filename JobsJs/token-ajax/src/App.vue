@@ -17,8 +17,16 @@ async function ajax() {
 }
 
 
+async function login() {
+  await axios.post('/login');
+}
+
 async function csrfCookie() {
   await axios.get('/sanctum/csrf-cookie');
+}
+
+async function getUser() {
+  await axios.get('/api/user');
 }
 
 </script>
@@ -27,6 +35,14 @@ async function csrfCookie() {
   <div>
     <button @click="csrfCookie">
       CSRF Cookie
+    </button>
+    
+    <button @click="login">
+     Login
+    </button>
+    
+    <button @click="getUser">
+     User
     </button>
     
     <br><br><br>
