@@ -8,14 +8,21 @@ Route::get('/', function () {
 
 Route::post('/login', function () {
     $login = [
-        'email' => 'loyce40@example.org',
-        'password' => 'password',
+        'email' => '',
+        'password' => '',
     ];
-    if(!auth()->attempt($login))
-    {
+
+    if (!auth()->attempt($login)) {
         throw new Exception();
     }
 
     request()->session()->regenerate();
     return auth()->user();
+});
+
+Route::post('/logout', function () {
+    auth()->logout();
+    request()->session()->invalidate();
+    request()->session()->regenerateToken();
+    return response()->json(['message' => 'Logged out successfully']);
 });
